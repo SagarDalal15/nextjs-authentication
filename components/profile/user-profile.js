@@ -6,16 +6,20 @@ import classes from "./user-profile.module.css";
 
 function UserProfile() {
   const changePasswordHandler = async (passwordData) => {
-    const response = await fetch("/api/user/change-password", {
-      method: "PATCH",
-      body: JSON.stringify(passwordData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const response = await fetch("/api/user/change-password", {
+        method: "PATCH",
+        body: JSON.stringify(passwordData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const data = await response.json();
-    console.log(data);
+      const data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

@@ -39,23 +39,30 @@ function AuthForm() {
     const enteredPassword = passwordInputRef.current.value;
 
     if (isLogin) {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email: enteredEmail,
-        password: enteredPassword,
-      });
+      try {
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: enteredEmail,
+          password: enteredPassword,
+        });
+        if (result.error !== "" && result.error !== null) {
+          alert(result.error);
+        }
 
-      if (!result.error) {
-        // set some auth state
+        if (!result.error) {
+          // set some auth state
 
-        router.replace("/profile");
+          router.replace("/profile");
+        }
+      } catch (error) {
+        alert(error);
       }
     } else {
       try {
         const result = await createUser(enteredEmail, enteredPassword);
-        console.log(result);
+        alert(result.message);
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     }
   }
